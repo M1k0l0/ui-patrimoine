@@ -7,12 +7,17 @@ import Patrimoine from "../../models/Patrimoine";
 import Flux from "../../models/possessions/Flux";
 import CreateNewPossession from './CreatePossession';
 
-function PossessionLIst() {
+function PossessionList() {
   const [dateSelectionnee, setDateSelectionnee] = useState(new Date());
   const [patrimoine, setPatrimoine] = useState(null);
   const [valeurPatrimoine, setValeurPatrimoine] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [editingPossession, setEditingPossession] = useState(null);
+  const [formValues, setFormValues] = useState({
+    libelle: '',
+    dateFin: '',
+  });
 
   useEffect(() => {
     fetch('http://localhost:3000/possession')
@@ -41,46 +46,74 @@ function PossessionLIst() {
       });
   }, []);
 
+  const handleEdit = (possession) => {
+    setEditingPossession(possession);
+    setFormValues({
+      libelle: possession.libelle,
+      dateFin: possession.dateFin ? possession.dateFin.toISOString().split('T')[0] : '',
+    });
+  };
 
-  const handleEdit = (libelle) => {
-    const newValue = prompt("Enter new value for possession:");
-    if (newValue === null) return; 
-    fetch(`http://localhost:3000/possession/${libelle}/edit`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ libelle: parseFloat(newValue) })
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch(`http://localhost:3000/possession/${editingPossession.libelle}/edit`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        libelle: formValues.libelle,
+        dateFin: formValues.dateFin ? new Date(formValues.dateFin).toISOString() : null,
+      })
     })
-        .then(res => res.json())
-        .then(updatedPossession => {
-            const updatedPossessions = patrimoine.possessions.map(p =>
-                p.libelle === libelle ? {
-                    ...p,
-                    ...updatedPossession,
-                    dateDebut: new Date(updatedPossession.dateDebut),
-                    dateFin: updatedPossession.dateFin ? new Date(updatedPossession.dateFin) : null
-                } : p
-            );
-            setPatrimoine(prevPatrimoine => ({
-                ...prevPatrimoine,
-                possessions: updatedPossessions
-            }));
-        })
-        .catch(err => setError('Failed to update possession: ' + err.message));
-};
+      .then(res => res.json())
+      .then(updatedPossession => {
+        const updatedPossessions = patrimoine.possessions.map(p =>
+          p.libelle === editingPossession.libelle ? {
+            ...p,
+            ...updatedPossession,
+            dateFin: updatedPossession.dateFin ? new Date(updatedPossession.dateFin) : null
+          } : p
+        );
+        setPatrimoine(prevPatrimoine => ({
+          ...prevPatrimoine,
+          possessions: updatedPossessions
+        }));
+        // Conserver les valeurs du formulaire après la soumission
+        // Ne réinitialisez pas les valeurs du formulaire ici
+        setEditingPossession(null);
+      })
+      .catch(err => setError('Failed to update possession: ' + err.message));
+  };
 
   const handleClose = (libelle) => {
-  fetch(`http://localhost:3000/possession/${libelle}/close`, {
-    method: 'POST'
-  })
-    .then(res => res.json())
-    .then(() => {
-      setPatrimoine(prevPatrimoine => ({
-        ...prevPatrimoine,
-        possessions: prevPatrimoine.possessions.filter(p => p.libelle !== libelle)
-      }));
+    fetch(`http://localhost:3000/possession/${libelle}/close`, {
+      method: 'POST'
     })
-    .catch(err => setError('Failed to close possession: ' + err.message));
-    };
+      .then(res => res.json())
+      .then(updatedPossession => {
+        const updatedPossessions = patrimoine.possessions.map(p =>
+          p.libelle === libelle ? {
+            ...p,
+            ...updatedPossession,
+            dateFin: updatedPossession.dateFin ? new Date(updatedPossession.dateFin) : null
+          } : p
+        );
+        setPatrimoine(prevPatrimoine => ({
+          ...prevPatrimoine,
+          possessions: updatedPossessions
+        }));
+        // La logique de réinitialisation ou d'autres actions après la fermeture restent inchangées
+        window.location.reload();
+      })
+      .catch(err => setError('Failed to close possession: ' + err.message));
+  };
 
   return (
     <Container>
@@ -116,20 +149,35 @@ function PossessionLIst() {
                         <td>{possession.tauxAmortissement}</td>
                         <td>{(possession instanceof Possession || possession instanceof Flux) ? possession.getValeur(dateSelectionnee).toFixed(2) : 'N/A'}</td>
                         <td>
-                          <Button variant="warning" onClick={() => handleEdit(possession.libelle)}>Edit</Button>
+                          <Button variant="warning" onClick={() => handleEdit(possession)}>Edit</Button>
                           <Button variant="info" onClick={() => handleClose(possession.libelle)}>Close</Button>
                         </td>
                       </tr>
                     ))}
                 </tbody>
               </Table>
+              {editingPossession && (
+                <Form onSubmit={handleSubmit}>
+                  <h3>Edit Possession</h3>
+                  <Form.Group controlId="formLibelle">
+                    <Form.Label>Libellé</Form.Label>
+                    <Form.Control type="text" name="libelle" value={formValues.libelle} onChange={handleFormChange} required />
+                  </Form.Group>
+                  <Form.Group controlId="formDateFin">
+                    <Form.Label>Date Fin</Form.Label>
+                    <Form.Control type="date" name="dateFin" value={formValues.dateFin} onChange={handleFormChange} />
+                  </Form.Group>
+                  <Button variant="success" type="submit">Mettre à jour</Button>
+                  <Button variant="danger" onClick={() => setEditingPossession(null)}>Annuler</Button>
+                </Form>
+              )}
             </>
           )}
         </Col>
       </Row>
-      <CreateNewPossession/>
+      <CreateNewPossession />
     </Container>
   );
 }
 
-export default PossessionLIst;
+export default PossessionList;
