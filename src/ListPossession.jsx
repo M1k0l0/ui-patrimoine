@@ -85,8 +85,6 @@ function PossessionList() {
           ...prevPatrimoine,
           possessions: updatedPossessions
         }));
-        // Conserver les valeurs du formulaire après la soumission
-        // Ne réinitialisez pas les valeurs du formulaire ici
         setEditingPossession(null);
       })
       .catch(err => setError('Failed to update possession: ' + err.message));
@@ -109,7 +107,6 @@ function PossessionList() {
           ...prevPatrimoine,
           possessions: updatedPossessions
         }));
-        // La logique de réinitialisation ou d'autres actions après la fermeture restent inchangées
         window.location.reload();
       })
       .catch(err => setError('Failed to close possession: ' + err.message));
