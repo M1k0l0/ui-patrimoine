@@ -73,12 +73,12 @@ function PatrimoineSite() {
             className='datePickerStyle'
           />
         </div>
-        <Button style={{ backgroundColor: 'gray' }} onClick={calculerValeurPatrimoine}>Valider</Button>
+        <Button className='button' onClick={calculerValeurPatrimoine}>Valider</Button>
       </Form>
       {valeurPatrimoine !== null && (
         <div className="mt-4">
           <h3>Valeur Totale du Patrimoine</h3>
-          <p>{valeurPatrimoine.toFixed(2)} Ariary</p>
+          <p className='valeur'>{valeurPatrimoine.toFixed(2)} Ariary</p>
         </div>
       )}
       <LineChart/>

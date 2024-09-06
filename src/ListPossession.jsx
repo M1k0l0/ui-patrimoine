@@ -149,8 +149,8 @@ function PossessionList() {
                         <td>{possession.tauxAmortissement}</td>
                         <td>{(possession instanceof Possession || possession instanceof Flux) ? possession.getValeur(dateSelectionnee).toFixed(2) : 'N/A'}</td>
                         <td>
-                          <Button variant="warning" onClick={() => handleEdit(possession)}>Edit</Button>
-                          <Button variant="info" onClick={() => handleClose(possession.libelle)}>Close</Button>
+                          <Button className='button' variant="warning" onClick={() => handleEdit(possession)}>Edit</Button>
+                          <Button className='button' variant="info" onClick={() => handleClose(possession.libelle)}>Close</Button>
                         </td>
                       </tr>
                     ))}
@@ -160,15 +160,15 @@ function PossessionList() {
                 <Form onSubmit={handleSubmit}>
                   <h3>Edit Possession</h3>
                   <Form.Group controlId="formLibelle">
-                    <Form.Label>Libellé</Form.Label>
+                    <Form.Label className='format'>Libellé</Form.Label>
                     <Form.Control type="text" name="libelle" value={formValues.libelle} onChange={handleFormChange} required />
                   </Form.Group>
                   <Form.Group controlId="formDateFin">
-                    <Form.Label>Date Fin</Form.Label>
+                    <Form.Label className='format'>Date Fin</Form.Label>
                     <Form.Control type="date" name="dateFin" value={formValues.dateFin} onChange={handleFormChange} />
                   </Form.Group>
-                  <Button variant="success" type="submit">Mettre à jour</Button>
-                  <Button variant="danger" onClick={() => setEditingPossession(null)}>Annuler</Button>
+                  <Button className='mise' variant="success" type="submit">Mettre à jour</Button>
+                  <Button className='annuler' variant="danger" onClick={() => setEditingPossession(null)}>Annuler</Button>
                 </Form>
               )}
             </>

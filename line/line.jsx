@@ -68,11 +68,6 @@ function LineChart() {
 
   return (
     <Container fluid>
-      <Row className='mt-4'>
-        <Col md={12}>
-          <h1>Patrimoine</h1>
-        </Col>
-      </Row>
       <Row className='mt-4' style={{width : "100%"}}>
         <Col md={6} style={{width : "100%"}}>
           <Form>
@@ -84,7 +79,7 @@ function LineChart() {
               <Form.Label>Date fin:</Form.Label>
               <Form.Control type="date" value={dateFin} onChange={handleDateFinChange} />
             </Form.Group>
-            <Button variant="primary" type="button" onClick={handleValidateClick}>
+            <Button className='button' variant="primary" type="button" onClick={handleValidateClick}>
               Valider
             </Button>
           </Form>

@@ -14,10 +14,10 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" >
             <Nav className="me-auto">
-              <NavItem className='me-5' onClick={handleRefresh}>
+              <NavItem className='item' onClick={handleRefresh}>
                 <Link to="/">Possessions</Link>
               </NavItem>
-              <NavItem className='me-5' onClick={handleRefresh}>
+              <NavItem className='item' onClick={handleRefresh}>
                 <Link to="/patrimoine">Patrimoine</Link>
               </NavItem>
             </Nav>

@@ -74,7 +74,6 @@ button:focus-visible {
 body{
   margin: 0;
   padding: 0;
-  height: 100dvh;
   background-color: #d5d6e6;
   box-sizing: border-box;
 }
@@ -134,4 +133,64 @@ h2{
 
 .patrimoine Button{
   margin-top: 3vh;
+}
+
+.item{
+  font-size: 1.5rem;
+  margin-left: 10vw;
+  color: whitesmoke;
+}
+.item a{
+  text-decoration: none;
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+.mise ,
+.annuler{
+  background-color:transparent;
+  border: 2px solid #6c6d83;
+  color: #6c6d83;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 2vh;
+  margin-left: 1vw;
+}
+
+.format{
+  font-size: 1.5rem;
+  color: #6c6d83;
+  font-weight: bolder;
+}
+
+h3{
+color: #6c6d83;
+font-weight: bold;
+}
+
+.button{
+  background-color:transparent;
+  border: 2px solid #6c6d83;
+  color: #6c6d83;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1.5vh;
+  margin-left: 0.5vw;
+}
+
+.labelStyle{
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #6c6d83;
+}
+.datePickerStyle{
+  text-decoration: none;
+  border: 2px solid #6c6d83;
+  margin-left: 1vw;
+  height: 5vh;
+}
+
+.valeur{
+  font-size: 1.3rem;
+  font-weight: bolder;
 }

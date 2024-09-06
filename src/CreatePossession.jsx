@@ -94,7 +94,7 @@ function CreateNewPossession() {
                   />
                 </td>
                 <td>
-                  <Button type="submit" onClick={handleSubmit}>Create</Button>
+                  <Button className='button' type="submit" onClick={handleSubmit}>Create</Button>
                 </td>
               </tr>
             </tbody>
