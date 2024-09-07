@@ -2,9 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import 'react-datepicker/dist/react-datepicker.css';
-import Possession from "../../models/possessions/Possession";
-import Patrimoine from "../../models/Patrimoine";
-import Flux from "../../models/possessions/Flux";
+import Possession from "../models/possessions/Possession";
+import Patrimoine from "../models/Patrimoine";
+import Flux from "../models/possessions/Flux";
 import CreateNewPossession from './CreatePossession';
 
 function PossessionList() {
