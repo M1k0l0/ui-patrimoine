@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Possession from "../../models/possessions/Possession";
-import Patrimoine from "../../models/Patrimoine";
-import Flux from "../../models/possessions/Flux";
+import Possession from "../models/possessions/Possession";
+import Patrimoine from "../models/Patrimoine";
+import Flux from "../models/possessions/Flux";
 import LineChart from '../line/line';
 
 function PatrimoineSite() {
