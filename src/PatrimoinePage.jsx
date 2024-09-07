@@ -16,7 +16,7 @@ function PatrimoineSite() {
   const [chart, setChart] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/possession')
+    fetch('https://patrimoine-economique-l6ee.onrender.com/possession')
       .then(res => res.json())
       .then(data => {
         const possessions = data.map((possession) => {
